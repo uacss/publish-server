@@ -6,17 +6,24 @@ const ArticleSchema = new mongoose.Schema(
     title: {
       type: String,
       required: true,
-      minLength: 3,
-      maxLength: 100,
+      minlength: 3,
+      maxlength: 100,
     },
     text: {
       type: String,
       required: true,
-      minLength: 20,
-      maxLength: 750,
+      minlength: 20,
+      maxlength: 1000,
     },
-    date: { type: Date, default: Date.now },
-    comments: { type: Array, ref: 'Comment' },
+    author_id: {
+      type: String,
+      require: true,
+    },
+    author_name: {
+      type: String,
+      require: true,
+    },
+    posted_at: { type: Date, default: Date.now },
   },
   { collection: 'articles' },
 );
