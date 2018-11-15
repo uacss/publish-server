@@ -1,4 +1,4 @@
-const Article = require('../models/Article');
+const Article = require('../models/article.model');
 
 module.exports = app => {
   app.get('/article', function(req, res) {
@@ -25,6 +25,8 @@ module.exports = app => {
       {
         title: req.body.title,
         text: req.body.text,
+        author_id: req.body.author_id,
+        author_name: req.body.author_name,
       },
       function(err, article) {
         if (err)
