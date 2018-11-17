@@ -52,6 +52,10 @@ module.exports = app => {
     );
   });
 
+  app.get('/logout', function(req, res) {
+    res.status(200).send({ auth: false, token: null });
+  });
+
   app.get('/user', verifyToken, function(req, res, next) {
     User.findById(req.userId, function(err, user) {
       if (err) return status(500).send('There was a problem finding the user.');
