@@ -7,25 +7,25 @@ const ArticleSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 3,
-      maxlength: 100,
+      maxlength: 100
     },
     text: {
       type: String,
       required: true,
       minlength: 20,
-      maxlength: 1000,
+      maxlength: 1000
     },
     author_id: {
       type: String,
-      require: true,
+      require: true
     },
     author_name: {
       type: String,
-      require: true,
-    },
-    posted_at: { type: Date, default: Date.now },
+      require: true
+    }
   },
-  { collection: 'articles' },
+  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
+  { collection: 'articles' }
 );
 
 mongoose.model('Article', ArticleSchema);

@@ -6,23 +6,23 @@ const CommentSchema = new mongoose.Schema(
     text: {
       type: String,
       require: true,
-      maxLength: 250,
+      maxLength: 250
     },
     author_id: {
       type: String,
-      require: true,
+      require: true
     },
     author_name: {
       type: String,
-      require: true,
+      require: true
     },
     article_id: {
       type: String,
-      require: true,
-    },
-    posted_at: { type: Date, default: Date.now },
+      require: true
+    }
   },
-  { collection: 'comments' },
+  { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' } },
+  { collection: 'comments' }
 );
 
 mongoose.model('Comment', CommentSchema);

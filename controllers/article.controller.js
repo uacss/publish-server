@@ -26,22 +26,22 @@ module.exports = app => {
         title: req.body.title,
         text: req.body.text,
         author_id: req.body.author_id,
-        author_name: req.body.author_name,
+        author_name: req.body.author_name
       },
       function(err, article) {
         if (err)
           return res
             .status(500)
             .send(
-              'There was a problem adding the information to the database.',
+              'There was a problem adding the information to the database.'
             );
         res.status(200).send(article);
-      },
+      }
     );
   });
 
   app.delete('/article/:id', function(req, res) {
-    Article.findOneAndDelete(req.params.id, function(err, article) {
+    Article.findOneAndDelete({ _id: req.params.id }, function(err, article) {
       if (err)
         return res
           .status(500)
@@ -51,12 +51,17 @@ module.exports = app => {
   });
 
   app.put('/article/:id', function(req, res) {
-    Article.findOneAndUpdate(req.params.id, req.body, function(err, article) {
-      if (err)
-        return res
-          .status(500)
-          .send('There was a problem updating the article.');
-      res.status(200).send(article);
-    });
+    Article.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true },
+      function(err, article) {
+        if (err)
+          return res
+            .status(500)
+            .send('There was a problem updating the article.');
+        res.status(200).send(article);
+      }
+    );
   });
 };
