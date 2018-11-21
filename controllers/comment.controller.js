@@ -34,12 +34,26 @@ module.exports = app => {
 
   // DELETE /comment/{id} Delete a comment by id
   app.delete('/comment/:id', function(req, res) {
-    Comment.findOneAndDelete(req.params.id, function(err, comment) {
+    Comment.findOneAndDelete({ _id: req.params.id }, function(err, comment) {
       if (err)
         return res
           .status(500)
           .send('There was a problem deleting the comment.');
       res.status(200).send('Comment was deleted.');
     });
+  });
+
+  // UPDATE /comment/{id} Update comment by id
+  app.put('/comment/:id', function(req, res) {
+    Comment.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true },
+      function(err, comment) {
+        if (err)
+          return res.status(500).send('There was a problem updating comment.');
+        res.status(200).send(comment);
+      }
+    );
   });
 };
