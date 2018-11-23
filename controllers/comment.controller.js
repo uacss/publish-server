@@ -3,12 +3,19 @@ const Comment = require('../models/comment.model');
 module.exports = app => {
   // GET /comment/{article_id} Get comments of a single article by article_id
   app.get('/comment/:id', function(req, res) {
-    Comment.find({ article_id: req.params.id }, function(err, comment) {
-      if (err)
-        return res.status(500).send('There was a problem finding the comment.');
-      if (!comment) return res.status(404).send('No comment found.');
-      res.status(200).send(comment);
-    });
+    Comment.find(
+      { article_id: req.params.id },
+      null,
+      { sort: { updated_at: -1 } },
+      function(err, comment) {
+        if (err)
+          return res
+            .status(500)
+            .send('There was a problem finding the comment.');
+        if (!comment) return res.status(404).send('No comment found.');
+        res.status(200).send(comment);
+      }
+    );
   });
 
   // POST /comment/{article_id} Post comment to a single post

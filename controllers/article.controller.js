@@ -1,8 +1,30 @@
 const Article = require('../models/article.model');
 
 module.exports = app => {
+  // GET /article/author/{author_id} Get articles by author_id
+  app.get('/article/author/:id', function(req, res) {
+    Article.find(
+      { author_id: req.params.id },
+      null,
+      { sort: { updated_at: -1 } },
+      function(err, articles) {
+        if (err)
+          return res
+            .status(500)
+            .send('There was a problem finding the articles.');
+        if (!articles || !articles.length)
+          return res.status(500).send('No articles found.');
+        res.status(200).send(articles);
+      }
+    );
+  });
+
+  // GET /article/ Get all articles
   app.get('/article', function(req, res) {
-    Article.find({}, function(err, articles) {
+    Article.find({}, null, { sort: { updated_at: -1 } }, function(
+      err,
+      articles
+    ) {
       if (err)
         return res
           .status(500)
@@ -11,6 +33,7 @@ module.exports = app => {
     });
   });
 
+  // GET /article/{article_id} Get article by article_id
   app.get('/article/:id', function(req, res) {
     Article.findById(req.params.id, function(err, article) {
       if (err)
@@ -20,6 +43,7 @@ module.exports = app => {
     });
   });
 
+  // POST /article Create a single article
   app.post('/article', function(req, res) {
     Article.create(
       {
@@ -40,6 +64,7 @@ module.exports = app => {
     );
   });
 
+  // DELETE /article/{article_id} Delete an article by article_id
   app.delete('/article/:id', function(req, res) {
     Article.findOneAndDelete({ _id: req.params.id }, function(err, article) {
       if (err)
@@ -50,6 +75,7 @@ module.exports = app => {
     });
   });
 
+  // UPDATE /article/{article_id} Update article by article_id
   app.put('/article/:id', function(req, res) {
     Article.findOneAndUpdate(
       { _id: req.params.id },

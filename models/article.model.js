@@ -13,7 +13,7 @@ const ArticleSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 20,
-      maxlength: 1000
+      maxlength: 2000
     },
     author_id: {
       type: String,
